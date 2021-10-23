@@ -1,0 +1,298 @@
+public class LinkedList<T extends Comparable<T>> implements List<T> {
+    Node head = new Node(null,null);
+    int size = 0;
+    Node last;
+
+    @Override
+    public boolean add(T element) {
+        Node runner = head.getNext();
+        Node newnode = new Node(element, null);
+        if (head.getNext() == null) {   // list is empty, both head and tail will point to new node
+            if (element != null) {
+                head.setNext(newnode);
+                return true;
+            }
+            if (element == null) {
+                return false;
+            }
+        }
+        public IntNode makelist(int n){
+            IntNode head = new Node(null,null);
+            if(n<1){
+                return null;
+            }
+            else{
+                for(int i =1; i <=n;i++){
+                    IntNode newnode = new IntNode(i,head);
+                    head = newnode;
+                }
+            }
+            return head;
+        }
+
+        while (runner.getNext() != null) {   //access to the end of linked list
+            runner = runner.getNext();
+        }
+        if (element != null) {
+            runner.setNext(newnode);
+            return true;
+        }
+        if (element == null) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean add(int index, T element) {
+        Node<T> newnode = new Node<T>(element,null);
+        if (index < 0 || index >= size() || element==null) {   //out of the range of list
+            return false;
+        }
+        if (index == 0) {
+            newnode.setNext(head.getNext());
+            head.setNext(newnode);
+        }
+        else if(index >0){
+            Node runner, previous;
+            previous = head;
+            runner = head.getNext();
+            for (int i = 0; i < index; i++) {  //if index = 1
+                previous = runner;  //previous is in index = 0
+                runner = runner.getNext();   //runner is in index = 1
+            }
+            previous.setNext(newnode);
+            newnode.setNext(runner);
+        }
+        return true;
+    }
+
+    @Override
+    public void clear() {
+        head.setNext(null);
+    }
+
+    @Override
+    public boolean contains(T element) {
+        Node current = head.getNext();
+        while(current !=null){
+            if(current.getData().equals(element)){
+                return true;
+            }
+            current = current.getNext();
+        }
+
+        return false;
+    }
+
+    @Override
+    public T getNth(int n) {
+        Node temp = head.getNext();
+        if (n = 0) {
+            return temp;
+        }
+        else if(temp!= null){
+            if(index == 0){
+                return (T) temp.getData();
+            }
+            else if(index<size()){
+                for (int i = 0; i < index; i++) {
+                    temp = temp.getNext();
+                }
+                return (T) temp.getData();
+            }
+        }
+       return null;
+    }
+
+    @Override
+    public int indexOf(T element) {
+        int index = 0;
+        Node runner = head.getNext();
+        if (index >= size() || element == null || contains(element) == false || index<0) {
+            return -1;
+        }
+        while (runner != null) {
+            if (runner.getData().equals(element)) {
+                return index;
+            }
+            index++;
+            runner = runner.getNext();
+        }
+        return index;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        if (head.getNext() == null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int lastIndexOf(T element) {   //head -> 1->3->5->3;
+     //   sort(true);
+        int index = 0;
+        Node runner = head.getNext();
+        int temp = 0;
+        if (index >= size() || element == null || contains(element) == false || index<0) {
+            return -1;
+        }
+        while (runner != null) {
+            if (runner.getData().equals(element)) {
+                temp = index;
+            }
+            index++;
+            runner = runner.getNext();
+        }
+        return temp;
+    }
+
+    @Override
+    public T set(int index, T element) {
+        Node current = head.getNext();
+        Node temp = new Node(null,null);
+        if(index >size()-1 || index<0 ||element == null){
+            return null;
+        }
+        else{
+            for (int i = 0; i < index; i++) {
+                current = current.getNext();
+            }
+            temp.setData(current.getData());
+            current.setData(element);
+        }
+        return (T) temp.getData();
+    }
+
+    @Override
+    public int size() {
+        int count = 0;
+        Node current = head.getNext();
+        if(head.getNext() ==null){
+            return count;
+        }
+        if(head.getNext() != null) {
+            count = count + 1;
+            //current start from 1, if head-> current , if linked list is not empty
+            while (current.getNext() != null) { //when current is the end of my linked list, count the whole elements of the list
+                count++;
+                current = current.getNext();
+            }
+            return count;
+        }
+        return count;
+    }
+
+    @Override
+    public void sort(boolean order) {
+        T temp;
+        Node current,next;
+        current = head.getNext();
+        if (order == true) {  //increasing order
+            while (current != null) {  //do it one time, current is index = 0
+                next = current.getNext(); //the second element is linked list
+                if (next != null) {
+                    for (int i = 0; i < (size() - indexOf((T) current.getData())-1); i++) {
+                        if (next != null){
+                            if (current.getData().compareTo(next.getData()) > 0) {   //current > next
+                                temp = (T) current.getData();
+                                current.setData(next.getData());
+                                next.setData(temp);
+                            }
+                            next = next.getNext();
+                         }
+                    }
+                }
+                current = current.getNext();
+            }   // head -> 20->5->15->10
+        }
+    else{
+            while (current != null) {  //do it one time, current is index = 0
+                next = current.getNext(); //the second element is linked list
+                if (next != null) {
+                    for (int i = 0; i < (size() - indexOf((T) current.getData())-1); i++) {
+                        if (next != null){
+                            if (current.getData().compareTo(next.getData()) < 0) {   //current > next
+                                temp = (T) current.getData();
+                                current.setData(next.getData());
+                                next.setData(temp);
+                            }
+                            next = next.getNext();
+                        }
+                    }
+                }
+                current = current.getNext();
+            }   // head -> 20->5->15->10
+        }
+    }
+
+    @Override
+    public boolean remove(T element) {   //my linked list is like head -> element -> element form
+        Node current = head.getNext();
+        Node next = new Node(null,null);     // A node for traversing the list.
+        if(head.getNext() ==null){   //the list is empty
+            return false;
+        }
+        else if(current.getData().equals(element)){   //this one works
+            current = current.getNext();  //remove the first node
+            head.setNext(current);
+            return true;
+        }
+        else {
+
+            while(current.getNext() != null) {    //head -> 5->6->8, current = 5, next = 6; the second element is not null
+                next = current.getNext();   // Start by looking at the SECOND list node.
+                if (next != null && next.getData().equals(element)) {
+                    current.setNext(next.getNext());
+                    current = next;
+                    return true;
+                } else {
+                    // The item does not exist in the list.
+                    current = next;
+                }
+            }
+        }
+        return false;
+    } // end delete()
+
+
+    @Override
+    public T remove(int index) {   //my linked list is head -> element1 -> element2->element3 form
+        Node current = head.getNext();                  //head->element2->element3
+        Node next = current.getNext();
+        Node previous = head;
+        if(index ==0){
+            head.setNext(next);
+            return (T) current.getData();
+        }
+        if(index >0) {
+             if(current!= null){
+                if(index<size()){
+                    for (int i = 0; i < index; i++) {
+                        previous = previous.getNext();
+                        current = current.getNext();
+                    }
+                    previous.setNext(current.getNext());
+                    return (T) current.getData();    //this is the element of this index
+                }
+            }
+        }
+        if(index<0 || index >= size()) {
+            return null;
+        }
+        return (T) next.getData();
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        Node current = head.getNext();
+        while (current != null) {
+            result = result +" " +  current.getData().toString();
+            current = current.getNext();
+        }
+        return result;
+    }
+}
