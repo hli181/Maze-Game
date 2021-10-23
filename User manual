@@ -1,0 +1,11 @@
+For ArrayList and LinkedList, what I do is the implementation of the list interface. I finish the Arraylist and Linkedlist implementation then for those lists we 
+can call these method for other program when the object is arraylist or linkedlist. 
+
+In my LinkedList class, I set head is unchangable, the first index of linkedlist is the node that head point to. It follows this form: Head -> Element -> Element.
+When call clear() method, head is still exist but the size of linkedlist is 0. Because we need the elements behind the removed index move forward to fill this 
+arraylist, thus, I write Removegap() method to remove this gap after remove the element of given index.
+
+For add() method, the default capacity of this arraylist is 2, when the arraylist is full, if we still wang to add element on arraylist, i write growing() method
+to make new space for the arraylist to store the element. One thing need pay attention is for add(index,element) method, we would like to add a new element in a 
+specific index of arraylist, so I write makeroom() method to let those elements behind the index move backward one index and make the element of this specific
+index is what we want to add, the previous one element of this index move to next index.
